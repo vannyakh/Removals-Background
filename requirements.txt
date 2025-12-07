@@ -1,9 +1,21 @@
 fastapi==0.109.0
 uvicorn[standard]==0.27.0
 python-multipart==0.0.6
-torch==2.1.2
-torchvision==0.16.2
-Pillow==10.2.0
-numpy==1.26.3
-opencv-python==4.9.0.80
+Pillow>=10.0.0
+numpy>=1.24.0
+opencv-python>=4.8.0
+
+# IMPORTANT: PyTorch must be installed separately (not available via default PyPI)
+# Install PyTorch first, then run: pip install -r requirements.txt
+#
+# For CPU (recommended for most users):
+#   pip install torch torchvision
+#
+# For Apple Silicon (M1/M2/M3 Mac):
+#   pip install torch torchvision
+#
+# For CUDA (NVIDIA GPU):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#
+# If installation fails, visit: https://pytorch.org/get-started/locally/
 
