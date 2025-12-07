@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Removal Tool - AI Powered</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="url(#gradient)"/>
+                    <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+                            <stop offset="0%" stop-color="#667eea"/>
+                            <stop offset="100%" stop-color="#764ba2"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>Background Remover</h1>
+            </div>
+            <p class="subtitle">AI-powered background removal in seconds</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Section -->
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-box" id="uploadBox">
+                    <svg class="upload-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <h2>Drop your image here</h2>
+                    <p>or click to browse</p>
+                    <p class="file-info">Supports: JPG, PNG, WebP (Max 10MB)</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+            </div>
+
+            <!-- Processing Section -->
+            <div class="processing-section hidden" id="processingSection">
+                <div class="spinner"></div>
+                <p class="processing-text">Removing background...</p>
+                <p class="processing-subtext">This may take a few seconds</p>
+            </div>
+
+            <!-- Result Section -->
+            <div class="result-section hidden" id="resultSection">
+                <div class="comparison-container">
+                    <div class="image-panel">
+                        <h3>Original</h3>
+                        <div class="image-wrapper">
+                            <img id="originalImage" alt="Original" />
+                        </div>
+                    </div>
+                    <div class="divider">
+                        <div class="arrow-icon">→</div>
+                    </div>
+                    <div class="image-panel">
+                        <h3>Result</h3>
+                        <div class="image-wrapper checkered-bg">
+                            <img id="resultImage" alt="Result" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="newImageBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        Upload New Image
+                    </button>
+                    <button class="btn btn-primary" id="downloadBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download Result
+                    </button>
+                </div>
+
+                <!-- Background Options -->
+                <div class="background-options">
+                    <h3>Try Different Backgrounds</h3>
+                    <div class="bg-selector">
+                        <button class="bg-option active" data-bg="transparent">
+                            <span class="checkered-preview"></span>
+                            Transparent
+                        </button>
+                        <button class="bg-option" data-bg="white">
+                            <span class="color-preview" style="background: white;"></span>
+                            White
+                        </button>
+                        <button class="bg-option" data-bg="black">
+                            <span class="color-preview" style="background: black;"></span>
+                            Black
+                        </button>
+                        <button class="bg-option" data-bg="blue">
+                            <span class="color-preview" style="background: #3b82f6;"></span>
+                            Blue
+                        </button>
+                        <button class="bg-option" data-bg="green">
+                            <span class="color-preview" style="background: #10b981;"></span>
+                            Green
+                        </button>
+                        <button class="bg-option" data-bg="custom">
+                            <input type="color" id="customColorPicker" value="#ff6b6b">
+                            Custom
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div class="error-section hidden" id="errorSection">
+                <div class="error-box">
+                    <svg class="error-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                        <line x1="12" y1="8" x2="12" y2="12" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <h3>Oops! Something went wrong</h3>
+                    <p id="errorMessage">Please try again with a different image.</p>
+                    <button class="btn btn-secondary" id="tryAgainBtn">Try Again</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by U²-Net AI Model • Built with FastAPI & PyTorch</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
