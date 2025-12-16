@@ -36,6 +36,21 @@ app.add_middleware(
 app.include_router(router)
 
 
+# Validation exception handler
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """Handle validation errors"""
+    logger.error(f"Validation error: {str(exc)}")
+    return JSONResponse(
+        status_code=422,
+        content={
+            "detail": "Invalid request. Please check your input.",
+            "errors": exc.errors(),
+            "error_type": "ValidationError"
+        }
+    )
+
+
 # Global exception handler
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):

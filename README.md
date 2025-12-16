@@ -106,17 +106,17 @@ python main.py
 python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-2. **Open the frontend:**
-
-Open `client/index.html` in your web browser, or serve it with a simple HTTP server:
+2. **Start the frontend (React + Vite):**
 
 ```bash
-# Using Python's built-in server
 cd client
-python -m http.server 3000
+npm install  # or bun install
+npm run dev  # or bun run dev
 ```
 
-Then visit: `http://localhost:3000`
+The frontend will be available at `http://localhost:5173` (or the port shown in terminal)
+
+**Note:** Make sure to set `VITE_API_URL` in `client/.env` if your backend is running on a different port.
 
 3. **Try it out!**
    - Drag and drop an image or click to upload
@@ -128,10 +128,10 @@ Then visit: `http://localhost:3000`
 
 ### API Endpoint
 
-The frontend is configured to connect to `http://localhost:8000`. If you change the backend port, update the `API_URL` in `client/script.js`:
+The frontend is configured to connect to `http://localhost:8000`. If you change the backend port, update the `VITE_API_URL` in `client/.env`:
 
-```javascript
-const API_URL = 'http://localhost:8000';
+```bash
+VITE_API_URL=http://localhost:8000
 ```
 
 ### Model Options
@@ -191,10 +191,11 @@ curl -X POST "http://localhost:8000/remove-background" \
 
 ### Frontend Styling
 
-Edit `client/styles.css` to customize:
-- Colors (CSS variables in `:root`)
-- Layout and spacing
-- Animations and transitions
+The frontend uses **React + Vite + Tailwind CSS**. To customize:
+
+- Edit `client/tailwind.config.js` for theme customization
+- Edit `client/src/assets/style/index.css` for custom styles
+- Components are in `client/src/App.tsx`
 
 ### Backend Processing
 

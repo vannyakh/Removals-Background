@@ -28,12 +28,19 @@ class Settings(BaseSettings):
     DEVICE: str = "auto"  # "auto", "cpu", "cuda"
     
     # Image Processing
-    MAX_IMAGE_SIZE: int = 10 * 1024 * 1024  # 10MB
+    MAX_IMAGE_SIZE: int = 10 * 1024 * 1024  # 10MB (default)
+    MAX_IMAGE_SIZE_REMOVEBG: int = 22 * 1024 * 1024  # 22MB for /removebg endpoint
+    MAX_INPUT_MEGAPIXELS: int = 50  # Maximum input resolution in megapixels
     INPUT_SIZE: int = 320  # Model input size
     MAX_DIMENSION: int = 2048  # Max width/height for processing
     USE_MULTI_SCALE: bool = True  # Use multi-scale inference for better quality
     MASK_SMOOTHING: bool = True  # Apply mask smoothing
     EDGE_REFINEMENT: bool = True  # Apply edge refinement
+    
+    # Output Resolutions (in megapixels)
+    OUTPUT_PREVIEW_MP: float = 0.25  # Preview resolution
+    OUTPUT_FULL_MP: float = 25.0  # Full resolution
+    OUTPUT_50MP_MP: float = 50.0  # 50MP resolution
     
     # Performance
     ENABLE_CACHE: bool = False  # Enable result caching
@@ -44,6 +51,11 @@ class Settings(BaseSettings):
     CORS_CREDENTIALS: bool = True
     CORS_METHODS: list[str] = ["*"]
     CORS_HEADERS: list[str] = ["*"]
+    
+    # Authentication
+    API_KEY_ENABLED: bool = False  # Enable API key authentication
+    API_KEY: Optional[str] = None  # API key for authentication
+    OAUTH_ENABLED: bool = False  # Enable OAuth 2.0 authentication
     
     # Logging
     LOG_LEVEL: str = "INFO"
