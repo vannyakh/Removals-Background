@@ -86,6 +86,7 @@ class ModelManager:
             
             # Move to device and set to eval mode
             self.model.to(self.device)
+            self.model = self.model.float()
             self.model.eval()
             
             # Optimize for inference

@@ -59,8 +59,8 @@ class BackgroundRemovalService:
         # Normalize
         img_array = normalize_image_for_model(resized)
         
-        # Convert to tensor
-        tensor = torch.from_numpy(img_array).unsqueeze(0)
+        # Convert to tensor and ensure float32 dtype
+        tensor = torch.from_numpy(img_array).unsqueeze(0).float()
         
         return tensor, original_size
     
@@ -83,7 +83,7 @@ class BackgroundRemovalService:
         
         model = self.model_manager.get_model()
         device = self.model_manager.get_device()
-        input_tensor = input_tensor.to(device)
+        input_tensor = input_tensor.float().to(device)
         
         with torch.no_grad():
             if use_multi_scale:
