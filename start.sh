@@ -20,15 +20,15 @@ echo "📥 Installing dependencies..."
 pip install -q -r requirements.txt
 
 # Create models directory
-mkdir -p service/models
+mkdir -p models
 
 # Check if model exists
-if [ ! -f "service/models/u2net.pth" ]; then
+if [ ! -f "models/u2net.pth" ]; then
     echo ""
     echo "⚠️  Model weights not found!"
     echo "📥 Downloading U²-Net model (~176 MB)..."
     echo ""
-    python service/download_model.py
+    python app/utils/download_model.py
     echo ""
 fi
 

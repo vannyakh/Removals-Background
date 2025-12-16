@@ -13,6 +13,8 @@ dist/
 build/
 
 # Model weights (large files)
+models/*.pth
+models/*.pt
 service/models/*.pth
 service/models/*.pt
 *.pth
@@ -42,5 +44,16 @@ tmp/
 temp/
 *.tmp
 
+# Environment
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# App directories (keep structure but ignore caches)
+app/__pycache__/
+app/**/__pycache__/
 
 docs/

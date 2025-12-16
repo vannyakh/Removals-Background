@@ -18,19 +18,28 @@ An AI-powered online background removal tool built with **FastAPI**, **PyTorch**
 
 ## 🏗️ Architecture
 
+The project uses a modern, modular architecture with clear separation of concerns:
+
 ```
-remove-bg/
-├── client/              # Frontend
-│   ├── index.html      # Main HTML
-│   ├── styles.css      # Styling
-│   └── script.js       # JavaScript logic
-├── service/            # Backend
-│   ├── app.py          # FastAPI server
-│   ├── u2net.py        # U²-Net model architecture
-│   └── models/         # Model weights (create this)
-├── requirements.txt    # Python dependencies
-└── README.md          # This file
+removals-background/
+├── app/                    # Main application package
+│   ├── main.py           # FastAPI application
+│   ├── config.py         # Configuration management
+│   ├── api/              # API routes
+│   ├── core/             # Core logic (model management)
+│   ├── services/         # Business services
+│   ├── models/           # AI model architectures
+│   └── utils/            # Utilities
+├── client/               # Frontend
+│   ├── index.html
+│   ├── styles.css
+│   └── script.js
+├── models/               # Model weights directory
+├── requirements.txt      # Python dependencies
+└── README.md            # This file
 ```
+
+For detailed architecture documentation, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## 🚀 Quick Start
 
@@ -61,31 +70,40 @@ pip install -r requirements.txt
 
 4. **Download the U²-Net model weights:**
 
-Create a `service/models` directory and download the pre-trained weights:
+The model will be automatically downloaded on first run, or you can download it manually:
 
 ```bash
-mkdir -p service/models
-```
+# Automatic download
+python app/utils/download_model.py
 
-Download the model from:
-- **U²-Net Full**: [Google Drive Link](https://drive.google.com/uc?id=1ao1ovG1Qtx4b7EoskHXmi2E9rp5CHLcZ)
-- Save as: `service/models/u2net.pth`
-
-Or use this command (requires gdown):
-```bash
-python -m gdown https://drive.google.com/uc?id=1ao1ovG1Qtx4b7EoskHXmi2E9rp5CHLcZ -O service/models/u2net.pth
+# Or manually create models directory and download
+mkdir -p models
+# Download from: https://drive.google.com/uc?id=1ao1ovG1Qtx4b7EoskHXmi2E9rp5CHLcZ
+# Save as: models/u2net.pth
 ```
 
 ### Running the Application
 
 1. **Start the backend server:**
+
+**Option 1: Using the startup script (recommended)**
 ```bash
-python -m uvicorn service.app:app --reload --host 0.0.0.0 --port 8000
+# Windows
+start.bat
+
+# Linux/Mac
+chmod +x start.sh
+./start.sh
 ```
 
-Or simply:
+**Option 2: Using main.py**
 ```bash
-python service/app.py
+python main.py
+```
+
+**Option 3: Using uvicorn directly**
+```bash
+python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 2. **Open the frontend:**
@@ -118,12 +136,25 @@ const API_URL = 'http://localhost:8000';
 
 ### Model Options
 
-You can switch to the lighter U²-Net-P model for faster processing:
+You can configure the model through environment variables or `.env` file:
 
-In `service/app.py`, change:
-```python
-model = U2NETP(3, 1)  # Lighter/faster model
+```bash
+# Use lighter U²-Net-P model for faster processing
+MODEL_TYPE=u2netp
+
+# Or use full U²-Net for better quality
+MODEL_TYPE=u2net
+
+# Force CPU usage
+DEVICE=cpu
+
+# Enable/disable advanced features
+USE_MULTI_SCALE=true      # Better quality, slower
+MASK_SMOOTHING=true        # Smoother edges
+EDGE_REFINEMENT=true       # Better edge detection
 ```
+
+See `.env.example` for all configuration options.
 
 ## 📝 API Documentation
 

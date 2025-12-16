@@ -19,15 +19,15 @@ echo 📥 Installing dependencies...
 pip install -q -r requirements.txt
 
 REM Create models directory
-if not exist "service\models" mkdir service\models
+if not exist "models" mkdir models
 
 REM Check if model exists
-if not exist "service\models\u2net.pth" (
+if not exist "models\u2net.pth" (
     echo.
     echo ⚠️  Model weights not found!
     echo 📥 Downloading U²-Net model (~176 MB^)...
     echo.
-    python service\download_model.py
+    python app\utils\download_model.py
     echo.
 )
 
