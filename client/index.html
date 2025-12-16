@@ -3,141 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Background Removal Tool - AI Powered</title>
+    <title>Remove Image Background - AI Powered</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="8" fill="url(#gradient)"/>
-                    <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <defs>
-                        <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
-                            <stop offset="0%" stop-color="#667eea"/>
-                            <stop offset="100%" stop-color="#764ba2"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-                <h1>Background Remover</h1>
-            </div>
-            <p class="subtitle">AI-powered background removal in seconds</p>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Upload Section -->
-            <div class="upload-section" id="uploadSection">
-                <div class="upload-box" id="uploadBox">
-                    <svg class="upload-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                    </svg>
-                    <h2>Drop your image here</h2>
-                    <p>or click to browse</p>
-                    <p class="file-info">Supports: JPG, PNG, WebP (Max 10MB)</p>
-                    <input type="file" id="fileInput" accept="image/*" hidden>
-                </div>
-            </div>
-
-            <!-- Processing Section -->
-            <div class="processing-section hidden" id="processingSection">
-                <div class="spinner"></div>
-                <p class="processing-text">Removing background...</p>
-                <p class="processing-subtext">This may take a few seconds</p>
-            </div>
-
-            <!-- Result Section -->
-            <div class="result-section hidden" id="resultSection">
-                <div class="comparison-container">
-                    <div class="image-panel">
-                        <h3>Original</h3>
-                        <div class="image-wrapper">
-                            <img id="originalImage" alt="Original" />
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="container-fluid px-4 py-5">
+            <div class="row g-4">
+                <!-- Left Side - Example/Result Image -->
+                <div class="col-lg-6 d-flex flex-column justify-content-center">
+                    <div id="exampleSection" class="example-section">
+                        <h1 class="main-title mb-3">Remove Image Background</h1>
+                        <div class="badge-container mb-4">
+                            <span class="badge-text">100% Automatically and</span>
+                            <span class="badge-free">Free</span>
+                        </div>
+                        <div class="example-image-wrapper checkered-bg">
+                            <img id="exampleImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Crect width='600' height='600' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23999' font-size='24'%3EUpload an image to see result%3C/text%3E%3C/svg%3E" alt="Example" class="img-fluid">
                         </div>
                     </div>
-                    <div class="divider">
-                        <div class="arrow-icon">→</div>
-                    </div>
-                    <div class="image-panel">
-                        <h3>Result</h3>
-                        <div class="image-wrapper checkered-bg">
-                            <img id="resultImage" alt="Result" />
+                    
+                    <!-- Result View (hidden initially) -->
+                    <div id="resultSection" class="result-section d-none">
+                        <div class="result-comparison">
+                            <div class="result-panel">
+                                <h5 class="panel-title">Original</h5>
+                                <div class="image-preview-wrapper">
+                                    <img id="originalImage" alt="Original" class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="result-panel">
+                                <h5 class="panel-title">Result</h5>
+                                <div class="image-preview-wrapper checkered-bg" id="resultWrapper">
+                                    <img id="resultImage" alt="Result" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="action-buttons mt-4">
+                            <button class="btn btn-upload-new" id="newImageBtn">
+                                <i class="bi bi-upload me-2"></i>Upload New Image
+                            </button>
+                            <button class="btn btn-download" id="downloadBtn">
+                                <i class="bi bi-download me-2"></i>Download
+                            </button>
+                        </div>
+                        
+                        <!-- Background Options -->
+                        <div class="background-options mt-4">
+                            <h6 class="options-title">Try Different Backgrounds</h6>
+                            <div class="bg-selector">
+                                <button class="bg-option active" data-bg="transparent">
+                                    <div class="checkered-preview"></div>
+                                    <small>Transparent</small>
+                                </button>
+                                <button class="bg-option" data-bg="white">
+                                    <div class="color-preview bg-white"></div>
+                                    <small>White</small>
+                                </button>
+                                <button class="bg-option" data-bg="black">
+                                    <div class="color-preview bg-dark"></div>
+                                    <small>Black</small>
+                                </button>
+                                <button class="bg-option" data-bg="blue">
+                                    <div class="color-preview" style="background: #3b82f6;"></div>
+                                    <small>Blue</small>
+                                </button>
+                                <button class="bg-option" data-bg="green">
+                                    <div class="color-preview" style="background: #10b981;"></div>
+                                    <small>Green</small>
+                                </button>
+                                <button class="bg-option" data-bg="custom">
+                                    <input type="color" id="customColorPicker" value="#ff6b6b">
+                                    <small>Custom</small>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="action-buttons">
-                    <button class="btn btn-secondary" id="newImageBtn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                        </svg>
-                        Upload New Image
-                    </button>
-                    <button class="btn btn-primary" id="downloadBtn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        Download Result
-                    </button>
-                </div>
+                <!-- Right Side - Upload Card -->
+                <div class="col-lg-6">
+                    <div class="upload-card">
+                        <!-- Upload Section -->
+                        <div id="uploadSection">
+                            <button class="btn btn-upload-primary" id="uploadBtn">
+                                <i class="bi bi-cloud-upload me-2"></i>Upload Image
+                            </button>
+                            <input type="file" id="fileInput" accept="image/*" class="d-none">
+                            
+                            <p class="upload-hint mt-3 mb-2">or drop a file</p>
+                            
+                            <p class="paste-hint">
+                                paste image or <a href="#" id="pasteUrlLink" class="link-url">URL</a>
+                            </p>
+                            
+                            <!-- Sample Images -->
+                            <div class="sample-images mt-5">
+                                <p class="sample-title">No image? Try one of these:</p>
+                                <div class="sample-grid">
+                                    <div class="sample-item" data-sample="woman">
+                                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop" alt="Woman" onerror="this.style.display='none'">
+                                    </div>
+                                    <div class="sample-item" data-sample="bear">
+                                        <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=150&h=150&fit=crop" alt="Bear" onerror="this.style.display='none'">
+                                    </div>
+                                    <div class="sample-item" data-sample="car">
+                                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=150&h=150&fit=crop" alt="Car" onerror="this.style.display='none'">
+                                    </div>
+                                    <div class="sample-item" data-sample="microphone">
+                                        <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=150&h=150&fit=crop" alt="Microphone" onerror="this.style.display='none'">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Terms and Privacy -->
+                            <div class="terms-privacy mt-4">
+                                <small class="text-muted">
+                                    By uploading an image or URL you agree to our 
+                                    <a href="#" class="link-terms">Terms of Service</a>. 
+                                    To learn more about how we handle your personal data, check our 
+                                    <a href="#" class="link-terms">Privacy Policy</a>.
+                                </small>
+                            </div>
+                        </div>
 
-                <!-- Background Options -->
-                <div class="background-options">
-                    <h3>Try Different Backgrounds</h3>
-                    <div class="bg-selector">
-                        <button class="bg-option active" data-bg="transparent">
-                            <span class="checkered-preview"></span>
-                            Transparent
-                        </button>
-                        <button class="bg-option" data-bg="white">
-                            <span class="color-preview" style="background: white;"></span>
-                            White
-                        </button>
-                        <button class="bg-option" data-bg="black">
-                            <span class="color-preview" style="background: black;"></span>
-                            Black
-                        </button>
-                        <button class="bg-option" data-bg="blue">
-                            <span class="color-preview" style="background: #3b82f6;"></span>
-                            Blue
-                        </button>
-                        <button class="bg-option" data-bg="green">
-                            <span class="color-preview" style="background: #10b981;"></span>
-                            Green
-                        </button>
-                        <button class="bg-option" data-bg="custom">
-                            <input type="color" id="customColorPicker" value="#ff6b6b">
-                            Custom
-                        </button>
+                        <!-- Processing Section -->
+                        <div id="processingSection" class="d-none">
+                            <div class="processing-content text-center py-5">
+                                <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <h5 class="fw-semibold">Removing background...</h5>
+                                <p class="text-muted">This may take a few seconds</p>
+                            </div>
+                        </div>
+
+                        <!-- Error Section -->
+                        <div id="errorSection" class="d-none">
+                            <div class="error-content text-center py-5">
+                                <i class="bi bi-exclamation-triangle-fill text-danger display-4 d-block mb-3"></i>
+                                <h5 class="fw-semibold">Oops! Something went wrong</h5>
+                                <p id="errorMessage" class="text-muted mb-3">Please try again with a different image.</p>
+                                <button class="btn btn-outline-primary" id="tryAgainBtn">Try Again</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Error Section -->
-            <div class="error-section hidden" id="errorSection">
-                <div class="error-box">
-                    <svg class="error-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <circle cx="12" cy="12" r="10" stroke-width="2"/>
-                        <line x1="12" y1="8" x2="12" y2="12" stroke-width="2" stroke-linecap="round"/>
-                        <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    <h3>Oops! Something went wrong</h3>
-                    <p id="errorMessage">Please try again with a different image.</p>
-                    <button class="btn btn-secondary" id="tryAgainBtn">Try Again</button>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Powered by U²-Net AI Model • Built with FastAPI & PyTorch</p>
-        </footer>
+        </div>
     </div>
 
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
-

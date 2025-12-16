@@ -73,8 +73,7 @@ Download the model from:
 
 Or use this command (requires gdown):
 ```bash
-pip install gdown
-gdown https://drive.google.com/uc?id=1ao1ovG1Qtx4b7EoskHXmi2E9rp5CHLcZ -O service/models/u2net.pth
+python -m gdown https://drive.google.com/uc?id=1ao1ovG1Qtx4b7EoskHXmi2E9rp5CHLcZ -O service/models/u2net.pth
 ```
 
 ### Running the Application
